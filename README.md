@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SynergERP - Système de Gestion Intégré
 
-## Getting Started
+## Présentation du Projet
 
-First, run the development server:
+SynergERP est une solution de gestion complète et intuitive spécialement conçue pour les PME. Cette application centralise tous vos processus métiers dans une interface unique et facile à utiliser.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Fonctionnalités Principales
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 📊 Tableau de Bord
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Vue d'ensemble instantanée de votre activité
+- Suivi du chiffre d'affaires et des marges
+- Graphiques de tendances mensuelles
+- Indicateurs clés : clients, commandes, rentabilité
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 👥 Gestion des Clients
 
-## Learn More
+- Base de données clients centralisée
+- Ajout, modification et suppression facile
+- Référencement automatique dans les commandes et factures
 
-To learn more about Next.js, take a look at the following resources:
+### 📦 Gestion des Commandes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Suivi complet des commandes clients
+- Calcul automatique des marges et pourcentages de rentabilité
+- Gestion des statuts en temps réel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🧾 Gestion des Factures
 
-## Deploy on Vercel
+- Création et suivi des factures
+- Gestion des dates d'échéance
+- Statuts de paiement : Brouillon, Envoyée, Payée
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📦 Gestion des Stocks
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Inventaire des produits avec coûts et prix
+- Alertes automatiques pour stocks bas
+- Calcul de marge par produit
+
+### 🤝 Gestion des Fournisseurs
+
+- Catalogue des fournisseurs par catégorie
+- Coordonnées accessibles rapidement
+- Organisation par type (Matières premières, Équipement, Services)
+
+## Avantages
+
+✨ **Interface simple et intuitive** - Prise en main immédiate  
+💾 **Données locales** - Sécurisées dans votre navigateur  
+📈 **Suivi en temps réel** - Surveillez votre rentabilité  
+🔄 **Processus intégrés** - Tous vos outils en un seul endroit
+
+## Public Cible
+
+SynergERP est idéal pour :
+
+- Les petites et moyennes entreprises
+- Les entrepreneurs et indépendants
+- Toute organisation cherchant à centraliser sa gestion
+
+## Documentation Complète
+
+Une documentation détaillée est incluse dans l'application pour vous guider dans l'utilisation de chaque module et vous aider à tirer le meilleur parti de SynergERP.
+
+---
+
+_Développé avec les technologies modernes pour une expérience utilisateur optimale_
