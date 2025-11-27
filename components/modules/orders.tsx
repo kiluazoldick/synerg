@@ -12,6 +12,7 @@ interface OrdersModuleProps {
 
 export function OrdersModule({ isDark }: OrdersModuleProps) {
   const [data, setData] = useState<ERPData | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState<Partial<Order>>({})
   const [showForm, setShowForm] = useState(false)
@@ -19,6 +20,10 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
 
   useEffect(() => {
     setData(loadData())
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   if (!data) return <div style={{ padding: "20px", color: palette.text.secondary }}>Chargement...</div>
@@ -102,14 +107,29 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "24px" }}>
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "stretch" : "flex-start",
+          gap: isMobile ? "12px" : "0",
+        }}
+      >
         <div>
-          <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0", color: palette.text.primary }}>
+          <h1
+            style={{
+              fontSize: isMobile ? "22px" : "32px",
+              fontWeight: "700",
+              margin: "0 0 8px 0",
+              color: palette.text.primary,
+            }}
+          >
             Gestion des commandes
           </h1>
-          <p style={{ fontSize: "14px", color: palette.text.secondary, margin: 0 }}>
+          <p style={{ fontSize: isMobile ? "13px" : "14px", color: palette.text.secondary, margin: 0 }}>
             Total: {data.orders.length} commandes
           </p>
         </div>
@@ -122,21 +142,23 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: "8px",
-            padding: "10px 16px",
+            padding: isMobile ? "12px 16px" : "10px 16px",
             backgroundColor: palette.accent.blue,
             color: palette.text.inverse,
             border: "none",
             borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "14px",
+            fontSize: isMobile ? "13px" : "14px",
             fontWeight: "600",
             transition: "background-color 0.2s",
+            width: isMobile ? "100%" : "auto",
           }}
           onMouseOver={(e) => (e.currentTarget.style.opacity = "0.9")}
           onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
         >
-          <Plus size={18} /> Nouvelle commande
+          <Plus size={isMobile ? 16 : 18} /> {isMobile ? "Nouvelle" : "Nouvelle commande"}
         </button>
       </div>
 
@@ -147,16 +169,24 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
+            gap: isMobile ? "12px" : "16px",
           }}
         >
-          <h2 style={{ fontSize: "16px", fontWeight: "600", margin: 0, color: palette.text.primary }}>
+          <h2
+            style={{ fontSize: isMobile ? "14px" : "16px", fontWeight: "600", margin: 0, color: palette.text.primary }}
+          >
             {editingId ? "Modifier la commande" : "Nouvelle commande"}
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "12px",
+            }}
+          >
             <select
               value={formData.clientId || ""}
               onChange={(e) => setFormData({ ...formData, clientId: e.target.value })}
@@ -246,7 +276,7 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
             </select>
           </div>
 
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", flexDirection: isMobile ? "column" : "row" }}>
             <button
               onClick={() => (editingId ? handleUpdateOrder(editingId) : handleAddOrder())}
               style={{
@@ -291,16 +321,17 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
       )}
 
       {/* Orders List */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "10px" : "12px" }}>
         {data.orders.length === 0 ? (
           <div
             style={{
               textAlign: "center",
-              padding: "40px",
+              padding: isMobile ? "30px 20px" : "40px",
               color: palette.text.tertiary,
               backgroundColor: palette.bg.tertiary,
               borderRadius: "12px",
               border: `1px solid ${palette.border}`,
+              fontSize: isMobile ? "13px" : "14px",
             }}
           >
             Aucune commande. Créez-en une nouvelle.
@@ -315,7 +346,7 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
                   backgroundColor: palette.bg.secondary,
                   border: `1px solid ${palette.border}`,
                   borderRadius: "12px",
-                  padding: "20px",
+                  padding: isMobile ? "14px" : "20px",
                   boxShadow: palette.shadow,
                   transition: "box-shadow 0.2s",
                 }}
@@ -327,28 +358,37 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "flex-start",
-                    marginBottom: "16px",
+                    marginBottom: isMobile ? "12px" : "16px",
+                    flexDirection: isMobile ? "column" : "row",
+                    gap: isMobile ? "12px" : "0",
                   }}
                 >
                   <div>
                     <h3
-                      style={{ fontSize: "16px", fontWeight: "600", margin: "0 0 4px 0", color: palette.text.primary }}
+                      style={{
+                        fontSize: isMobile ? "14px" : "16px",
+                        fontWeight: "600",
+                        margin: "0 0 4px 0",
+                        color: palette.text.primary,
+                      }}
                     >
                       {order.orderNumber}
                     </h3>
-                    <p style={{ fontSize: "13px", color: palette.text.secondary, margin: 0 }}>
+                    <p style={{ fontSize: "12px", color: palette.text.secondary, margin: 0 }}>
                       {getClientName(order.clientId)}
                     </p>
                   </div>
-                  <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <div style={{ display: "flex", gap: "8px", alignItems: "center", width: isMobile ? "100%" : "auto" }}>
                     <span
                       style={{
                         padding: "6px 12px",
                         backgroundColor: statusColor.bg,
                         color: statusColor.text,
                         borderRadius: "6px",
-                        fontSize: "12px",
+                        fontSize: "11px",
                         fontWeight: "600",
+                        flex: isMobile ? 1 : "auto",
+                        textAlign: "center",
                       }}
                     >
                       {order.status}
@@ -395,23 +435,48 @@ export function OrdersModule({ isDark }: OrdersModuleProps) {
                 </div>
 
                 <div
-                  style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "16px" }}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(auto-fit, minmax(150px, 1fr))",
+                    gap: isMobile ? "12px" : "16px",
+                  }}
                 >
                   <div>
-                    <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>Montant total</p>
-                    <p style={{ fontSize: "18px", fontWeight: "700", color: palette.accent.blue, margin: 0 }}>
+                    <p style={{ fontSize: "11px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>Montant</p>
+                    <p
+                      style={{
+                        fontSize: isMobile ? "14px" : "18px",
+                        fontWeight: "700",
+                        color: palette.accent.blue,
+                        margin: 0,
+                      }}
+                    >
                       {order.totalAmount.toFixed(0)} XAF
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>Marge</p>
-                    <p style={{ fontSize: "18px", fontWeight: "700", color: palette.accent.teal, margin: 0 }}>
+                    <p style={{ fontSize: "11px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>Marge</p>
+                    <p
+                      style={{
+                        fontSize: isMobile ? "14px" : "18px",
+                        fontWeight: "700",
+                        color: palette.accent.teal,
+                        margin: 0,
+                      }}
+                    >
                       {order.marginAmount.toFixed(0)} XAF
                     </p>
                   </div>
                   <div>
-                    <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>% Marge</p>
-                    <p style={{ fontSize: "18px", fontWeight: "700", color: palette.text.primary, margin: 0 }}>
+                    <p style={{ fontSize: "11px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>% Marge</p>
+                    <p
+                      style={{
+                        fontSize: isMobile ? "14px" : "18px",
+                        fontWeight: "700",
+                        color: palette.text.primary,
+                        margin: 0,
+                      }}
+                    >
                       {((order.marginAmount / order.totalAmount) * 100).toFixed(1)}%
                     </p>
                   </div>

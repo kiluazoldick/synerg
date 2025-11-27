@@ -39,7 +39,7 @@ export function DocumentationModule({ isDark }: DocumentationModuleProps) {
   )
 
   const InfoBlock = ({ label, value }: any) => (
-    <p style={{ fontSize: "14px", color: palette.text.secondary, margin: "0" }}>
+    <p style={{ fontSize: "14px", color: palette.text.secondary, margin: 0 }}>
       <strong style={{ color: palette.text.primary }}>{label}:</strong> {value}
     </p>
   )

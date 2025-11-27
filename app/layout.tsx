@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -11,6 +10,11 @@ export const metadata: Metadata = {
   title: "SynergERP - Gestion PME",
   description: "Système de gestion intégré pour PME avec automatisation des processus et reporting en temps réel",
   generator: "v0.app",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
   icons: {
     icon: [
       {
@@ -48,7 +52,6 @@ export default function RootLayout({
         }}
       >
         {children}
-        <Analytics />
       </body>
     </html>
   )

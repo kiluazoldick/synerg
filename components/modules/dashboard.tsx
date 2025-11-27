@@ -24,10 +24,15 @@ interface DashboardProps {
 
 export function Dashboard({ isDark }: DashboardProps) {
   const [data, setData] = useState<ERPData | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const palette = isDark ? colors.dark : colors.light
 
   useEffect(() => {
     setData(loadData())
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   if (!data)
@@ -48,23 +53,38 @@ export function Dashboard({ isDark }: DashboardProps) {
   ]
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "20px" : "32px" }}>
       {/* Header */}
       <div>
-        <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0", color: palette.text.primary }}>
+        <h1
+          style={{
+            fontSize: isMobile ? "24px" : "32px",
+            fontWeight: "700",
+            margin: "0 0 8px 0",
+            color: palette.text.primary,
+          }}
+        >
           Tableau de bord
         </h1>
-        <p style={{ fontSize: "15px", color: palette.text.secondary, margin: 0 }}>Vue d'ensemble de votre activité</p>
+        <p style={{ fontSize: isMobile ? "13px" : "15px", color: palette.text.secondary, margin: 0 }}>
+          Vue d'ensemble de votre activité
+        </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: isMobile ? "12px" : "20px",
+        }}
+      >
         {/* Chiffre d'affaires - Blue Primary */}
         <div
           style={{
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
             borderLeft: `4px solid ${palette.accent.blue}`,
           }}
@@ -72,13 +92,22 @@ export function Dashboard({ isDark }: DashboardProps) {
           <div
             style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}
           >
-            <div style={{ fontSize: "13px", fontWeight: "500", color: palette.text.secondary }}>Chiffre d'affaires</div>
-            <DollarSign size={18} style={{ color: palette.accent.blue }} />
+            <div style={{ fontSize: isMobile ? "12px" : "13px", fontWeight: "500", color: palette.text.secondary }}>
+              Chiffre d'affaires
+            </div>
+            <DollarSign size={isMobile ? 16 : 18} style={{ color: palette.accent.blue }} />
           </div>
-          <div style={{ fontSize: "28px", fontWeight: "700", color: palette.accent.blue, marginBottom: "8px" }}>
+          <div
+            style={{
+              fontSize: isMobile ? "20px" : "28px",
+              fontWeight: "700",
+              color: palette.accent.blue,
+              marginBottom: "8px",
+            }}
+          >
             {totalRevenue.toFixed(0)} XAF
           </div>
-          <div style={{ fontSize: "12px", color: palette.text.tertiary }}>+12% ce mois</div>
+          <div style={{ fontSize: "11px", color: palette.text.tertiary }}>+12% ce mois</div>
         </div>
 
         {/* Marge totale - Teal Accent */}
@@ -87,7 +116,7 @@ export function Dashboard({ isDark }: DashboardProps) {
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
             borderLeft: `4px solid ${palette.accent.teal}`,
           }}
@@ -95,13 +124,22 @@ export function Dashboard({ isDark }: DashboardProps) {
           <div
             style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}
           >
-            <div style={{ fontSize: "13px", fontWeight: "500", color: palette.text.secondary }}>Marge totale</div>
-            <TrendingUp size={18} style={{ color: palette.accent.teal }} />
+            <div style={{ fontSize: isMobile ? "12px" : "13px", fontWeight: "500", color: palette.text.secondary }}>
+              Marge totale
+            </div>
+            <TrendingUp size={isMobile ? 16 : 18} style={{ color: palette.accent.teal }} />
           </div>
-          <div style={{ fontSize: "28px", fontWeight: "700", color: palette.accent.teal, marginBottom: "8px" }}>
+          <div
+            style={{
+              fontSize: isMobile ? "20px" : "28px",
+              fontWeight: "700",
+              color: palette.accent.teal,
+              marginBottom: "8px",
+            }}
+          >
             {totalMargin.toFixed(0)} XAF
           </div>
-          <div style={{ fontSize: "12px", color: palette.text.tertiary }}>{marginPercentage}% de marge</div>
+          <div style={{ fontSize: "11px", color: palette.text.tertiary }}>{marginPercentage}% de marge</div>
         </div>
 
         {/* Clients */}
@@ -110,20 +148,29 @@ export function Dashboard({ isDark }: DashboardProps) {
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
           }}
         >
           <div
             style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}
           >
-            <div style={{ fontSize: "13px", fontWeight: "500", color: palette.text.secondary }}>Clients</div>
-            <Users size={18} style={{ color: palette.accent.teal }} />
+            <div style={{ fontSize: isMobile ? "12px" : "13px", fontWeight: "500", color: palette.text.secondary }}>
+              Clients
+            </div>
+            <Users size={isMobile ? 16 : 18} style={{ color: palette.accent.teal }} />
           </div>
-          <div style={{ fontSize: "28px", fontWeight: "700", color: palette.text.primary, marginBottom: "8px" }}>
+          <div
+            style={{
+              fontSize: isMobile ? "20px" : "28px",
+              fontWeight: "700",
+              color: palette.text.primary,
+              marginBottom: "8px",
+            }}
+          >
             {clientCount}
           </div>
-          <div style={{ fontSize: "12px", color: palette.text.tertiary }}>Clients actifs</div>
+          <div style={{ fontSize: "11px", color: palette.text.tertiary }}>Clients actifs</div>
         </div>
 
         {/* Commandes */}
@@ -132,43 +179,64 @@ export function Dashboard({ isDark }: DashboardProps) {
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
           }}
         >
           <div
             style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}
           >
-            <div style={{ fontSize: "13px", fontWeight: "500", color: palette.text.secondary }}>Commandes</div>
-            <ShoppingCart size={18} style={{ color: palette.accent.teal }} />
+            <div style={{ fontSize: isMobile ? "12px" : "13px", fontWeight: "500", color: palette.text.secondary }}>
+              Commandes
+            </div>
+            <ShoppingCart size={isMobile ? 16 : 18} style={{ color: palette.accent.teal }} />
           </div>
-          <div style={{ fontSize: "28px", fontWeight: "700", color: palette.text.primary, marginBottom: "8px" }}>
+          <div
+            style={{
+              fontSize: isMobile ? "20px" : "28px",
+              fontWeight: "700",
+              color: palette.text.primary,
+              marginBottom: "8px",
+            }}
+          >
             {orderCount}
           </div>
-          <div style={{ fontSize: "12px", color: palette.text.tertiary }}>Commandes en cours</div>
+          <div style={{ fontSize: "11px", color: palette.text.tertiary }}>Commandes en cours</div>
         </div>
       </div>
 
-      {/* Charts */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "20px" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(400px, 1fr))",
+          gap: isMobile ? "16px" : "20px",
+        }}
+      >
         {/* Bar Chart */}
         <div
           style={{
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
           }}
         >
-          <h3 style={{ fontSize: "16px", fontWeight: "600", margin: "0 0 16px 0", color: palette.text.primary }}>
+          <h3
+            style={{
+              fontSize: isMobile ? "14px" : "16px",
+              fontWeight: "600",
+              margin: "0 0 16px 0",
+              color: palette.text.primary,
+            }}
+          >
             Chiffre d'affaires vs Marge
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke={palette.border} />
-              <XAxis dataKey="month" stroke={palette.text.secondary} />
-              <YAxis stroke={palette.text.secondary} />
+              <XAxis dataKey="month" stroke={palette.text.secondary} fontSize={isMobile ? 12 : 14} />
+              <YAxis stroke={palette.text.secondary} fontSize={isMobile ? 12 : 14} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: palette.bg.secondary,
@@ -177,7 +245,7 @@ export function Dashboard({ isDark }: DashboardProps) {
                   color: palette.text.primary,
                 }}
               />
-              <Legend />
+              {!isMobile && <Legend />}
               <Bar dataKey="revenue" fill={palette.accent.blue} name="Chiffre d'affaires" />
               <Bar dataKey="margin" fill={palette.accent.teal} name="Marge" />
             </BarChart>
@@ -190,18 +258,25 @@ export function Dashboard({ isDark }: DashboardProps) {
             backgroundColor: palette.bg.secondary,
             border: `1px solid ${palette.border}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             boxShadow: palette.shadow,
           }}
         >
-          <h3 style={{ fontSize: "16px", fontWeight: "600", margin: "0 0 16px 0", color: palette.text.primary }}>
+          <h3
+            style={{
+              fontSize: isMobile ? "14px" : "16px",
+              fontWeight: "600",
+              margin: "0 0 16px 0",
+              color: palette.text.primary,
+            }}
+          >
             Tendance du chiffre d'affaires
           </h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={isMobile ? 250 : 300}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke={palette.border} />
-              <XAxis dataKey="month" stroke={palette.text.secondary} />
-              <YAxis stroke={palette.text.secondary} />
+              <XAxis dataKey="month" stroke={palette.text.secondary} fontSize={isMobile ? 12 : 14} />
+              <YAxis stroke={palette.text.secondary} fontSize={isMobile ? 12 : 14} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: palette.bg.secondary,

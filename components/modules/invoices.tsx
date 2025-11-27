@@ -101,9 +101,17 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px", padding: "20px" }}>
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          flexDirection: "column",
+          gap: "12px",
+        }}
+      >
         <div>
           <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0", color: palette.text.primary }}>
             Gestion des factures
@@ -259,7 +267,7 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
             </select>
           </div>
 
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", flexDirection: "column", alignItems: "center" }}>
             <button
               onClick={() => (editingId ? handleUpdateInvoice(editingId) : handleAddInvoice())}
               style={{
@@ -334,11 +342,13 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
                   alignItems: "flex-start",
                   boxShadow: palette.shadow,
                   transition: "box-shadow 0.2s",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.boxShadow = palette.shadowMd)}
                 onMouseOut={(e) => (e.currentTarget.style.boxShadow = palette.shadow)}
               >
-                <div>
+                <div style={{ width: "100%" }}>
                   <h3 style={{ fontSize: "16px", fontWeight: "600", margin: "0 0 4px 0", color: palette.text.primary }}>
                     {invoice.invoiceNumber}
                   </h3>
@@ -349,12 +359,20 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
                     Échéance: {new Date(invoice.dueDate).toLocaleDateString()}
                   </p>
                 </div>
-                <div style={{ textAlign: "right" }}>
+                <div style={{ textAlign: "right", width: "100%", marginTop: "24px" }}>
                   <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "0 0 4px 0" }}>Montant</p>
                   <p style={{ fontSize: "18px", fontWeight: "700", color: palette.accent.blue, margin: "0 0 12px 0" }}>
                     {invoice.totalAmount.toFixed(0)} XAF
                   </p>
-                  <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "8px",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
                     <span
                       style={{
                         padding: "6px 12px",
@@ -363,6 +381,8 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
                         borderRadius: "6px",
                         fontSize: "12px",
                         fontWeight: "600",
+                        width: "100%",
+                        textAlign: "center",
                       }}
                     >
                       {invoice.status}
@@ -380,6 +400,8 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
                         justifyContent: "center",
                         transition: "background-color 0.2s",
                         color: palette.text.secondary,
+                        width: "100%",
+                        textAlign: "center",
                       }}
                       onMouseOver={(e) => (e.currentTarget.style.backgroundColor = palette.border)}
                       onMouseOut={(e) => (e.currentTarget.style.backgroundColor = palette.bg.tertiary)}
@@ -399,6 +421,8 @@ export function InvoicesModule({ isDark }: InvoicesModuleProps) {
                         justifyContent: "center",
                         transition: "background-color 0.2s",
                         color: palette.accent.red,
+                        width: "100%",
+                        textAlign: "center",
                       }}
                       onMouseOver={(e) => (e.currentTarget.style.opacity = "0.8")}
                       onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}

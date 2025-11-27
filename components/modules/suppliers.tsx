@@ -65,8 +65,8 @@ export function SuppliersModule({ isDark }: SuppliersModuleProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap" }}>
+        <div style={{ flex: 1, marginBottom: "16px" }}>
           <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0", color: palette.text.primary }}>
             Gestion des fournisseurs
           </h1>
@@ -276,6 +276,8 @@ export function SuppliersModule({ isDark }: SuppliersModuleProps) {
                 alignItems: "flex-start",
                 boxShadow: palette.shadow,
                 transition: "box-shadow 0.2s",
+                flexDirection: "column",
+                gap: "12px",
               }}
               onMouseOver={(e) => (e.currentTarget.style.boxShadow = palette.shadowMd)}
               onMouseOut={(e) => (e.currentTarget.style.boxShadow = palette.shadow)}

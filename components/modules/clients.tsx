@@ -12,6 +12,7 @@ interface ClientsModuleProps {
 
 export function ClientsModule({ isDark }: ClientsModuleProps) {
   const [data, setData] = useState<ERPData | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [formData, setFormData] = useState<Partial<Client>>({})
@@ -19,6 +20,10 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
 
   useEffect(() => {
     setData(loadData())
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   const handleAddClient = () => {
@@ -60,14 +65,28 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
   if (!data) return <div style={{ padding: "20px", color: palette.text.secondary }}>Chargement...</div>
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "24px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "stretch" : "flex-start",
+          gap: isMobile ? "12px" : "0",
+        }}
+      >
         <div>
-          <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0", color: palette.text.primary }}>
+          <h1
+            style={{
+              fontSize: isMobile ? "22px" : "32px",
+              fontWeight: "700",
+              margin: "0 0 8px 0",
+              color: palette.text.primary,
+            }}
+          >
             Gestion des clients
           </h1>
-          <p style={{ fontSize: "14px", color: palette.text.secondary, margin: 0 }}>
+          <p style={{ fontSize: isMobile ? "13px" : "14px", color: palette.text.secondary, margin: 0 }}>
             Total: {data.clients.length} clients
           </p>
         </div>
@@ -76,21 +95,23 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: "8px",
-            padding: "10px 16px",
+            padding: isMobile ? "12px 16px" : "10px 16px",
             backgroundColor: palette.accent.blue,
             color: palette.text.inverse,
             border: "none",
             borderRadius: "8px",
             cursor: "pointer",
-            fontSize: "14px",
+            fontSize: isMobile ? "13px" : "14px",
             fontWeight: "600",
             transition: "background-color 0.2s",
+            width: isMobile ? "100%" : "auto",
           }}
           onMouseOver={(e) => (e.currentTarget.style.opacity = "0.9")}
           onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
         >
-          <Plus size={18} /> Ajouter un client
+          <Plus size={isMobile ? 16 : 18} /> {isMobile ? "Ajouter" : "Ajouter un client"}
         </button>
       </div>
 
@@ -101,13 +122,15 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
             backgroundColor: palette.bg.secondary,
             border: `2px solid ${palette.accent.teal}`,
             borderRadius: "12px",
-            padding: "20px",
+            padding: isMobile ? "16px" : "20px",
             display: "flex",
             flexDirection: "column",
-            gap: "16px",
+            gap: isMobile ? "12px" : "16px",
           }}
         >
-          <h2 style={{ fontSize: "16px", fontWeight: "600", margin: 0, color: palette.text.primary }}>
+          <h2
+            style={{ fontSize: isMobile ? "14px" : "16px", fontWeight: "600", margin: 0, color: palette.text.primary }}
+          >
             {editingId ? "Modifier" : "Ajouter"} un client
           </h2>
           <input
@@ -118,7 +141,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
               padding: "10px 12px",
               border: `1px solid ${palette.border}`,
               borderRadius: "8px",
-              fontSize: "14px",
+              fontSize: isMobile ? "14px" : "14px",
               fontFamily: "inherit",
               backgroundColor: palette.bg.tertiary,
               color: palette.text.primary,
@@ -135,7 +158,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
               padding: "10px 12px",
               border: `1px solid ${palette.border}`,
               borderRadius: "8px",
-              fontSize: "14px",
+              fontSize: isMobile ? "14px" : "14px",
               fontFamily: "inherit",
               backgroundColor: palette.bg.tertiary,
               color: palette.text.primary,
@@ -152,7 +175,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
               padding: "10px 12px",
               border: `1px solid ${palette.border}`,
               borderRadius: "8px",
-              fontSize: "14px",
+              fontSize: isMobile ? "14px" : "14px",
               fontFamily: "inherit",
               backgroundColor: palette.bg.tertiary,
               color: palette.text.primary,
@@ -169,7 +192,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
               padding: "10px 12px",
               border: `1px solid ${palette.border}`,
               borderRadius: "8px",
-              fontSize: "14px",
+              fontSize: isMobile ? "14px" : "14px",
               fontFamily: "inherit",
               backgroundColor: palette.bg.tertiary,
               color: palette.text.primary,
@@ -178,7 +201,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
             onFocus={(e) => (e.currentTarget.style.borderColor = palette.accent.blue)}
             onBlur={(e) => (e.currentTarget.style.borderColor = palette.border)}
           />
-          <div style={{ display: "flex", gap: "12px" }}>
+          <div style={{ display: "flex", gap: "12px", flexDirection: isMobile ? "column" : "row" }}>
             <button
               onClick={handleAddClient}
               style={{
@@ -226,16 +249,17 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
       )}
 
       {/* Clients List */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? "10px" : "12px" }}>
         {data.clients.length === 0 ? (
           <div
             style={{
               textAlign: "center",
-              padding: "40px",
+              padding: isMobile ? "30px 20px" : "40px",
               color: palette.text.tertiary,
               backgroundColor: palette.bg.tertiary,
               borderRadius: "12px",
               border: `1px solid ${palette.border}`,
+              fontSize: isMobile ? "13px" : "14px",
             }}
           >
             Aucun client. Commencez par en ajouter un.
@@ -248,25 +272,34 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
                 backgroundColor: palette.bg.secondary,
                 border: `1px solid ${palette.border}`,
                 borderRadius: "12px",
-                padding: "20px",
+                padding: isMobile ? "14px" : "20px",
                 display: "flex",
+                flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
-                alignItems: "flex-start",
+                alignItems: isMobile ? "stretch" : "flex-start",
                 boxShadow: palette.shadow,
                 transition: "box-shadow 0.2s",
+                gap: isMobile ? "12px" : "0",
               }}
               onMouseOver={(e) => (e.currentTarget.style.boxShadow = palette.shadowMd)}
               onMouseOut={(e) => (e.currentTarget.style.boxShadow = palette.shadow)}
             >
               <div>
-                <h3 style={{ fontSize: "16px", fontWeight: "600", margin: "0 0 8px 0", color: palette.text.primary }}>
+                <h3
+                  style={{
+                    fontSize: isMobile ? "14px" : "16px",
+                    fontWeight: "600",
+                    margin: "0 0 8px 0",
+                    color: palette.text.primary,
+                  }}
+                >
                   {client.name}
                 </h3>
-                <p style={{ fontSize: "13px", color: palette.text.secondary, margin: "4px 0" }}>{client.company}</p>
-                <p style={{ fontSize: "13px", color: palette.text.tertiary, margin: "4px 0" }}>{client.email}</p>
-                <p style={{ fontSize: "13px", color: palette.text.tertiary, margin: "4px 0" }}>{client.phone}</p>
+                <p style={{ fontSize: "12px", color: palette.text.secondary, margin: "4px 0" }}>{client.company}</p>
+                <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "4px 0" }}>{client.email}</p>
+                <p style={{ fontSize: "12px", color: palette.text.tertiary, margin: "4px 0" }}>{client.phone}</p>
               </div>
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div style={{ display: "flex", gap: "8px", width: isMobile ? "100%" : "auto" }}>
                 <button
                   onClick={() => {
                     setEditingId(client.id)
@@ -274,6 +307,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
                     setShowForm(true)
                   }}
                   style={{
+                    flex: isMobile ? 1 : "auto",
                     padding: "8px",
                     backgroundColor: palette.bg.tertiary,
                     border: `1px solid ${palette.border}`,
@@ -293,6 +327,7 @@ export function ClientsModule({ isDark }: ClientsModuleProps) {
                 <button
                   onClick={() => handleDelete(client.id)}
                   style={{
+                    flex: isMobile ? 1 : "auto",
                     padding: "8px",
                     backgroundColor: isDark ? "#7f1d1d" : "#fef2f2",
                     border: `1px solid ${isDark ? "#991b1b" : "#fee2e2"}`,

@@ -146,6 +146,9 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
             gap: "16px",
+            width: "100%",
+            maxWidth: "600px",
+            margin: "0 auto",
           }}
         >
           <input
@@ -160,6 +163,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
               fontSize: "14px",
               backgroundColor: palette.bg.secondary,
               color: palette.text.primary,
+              width: "100%",
             }}
           />
           <input
@@ -175,6 +179,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
               fontSize: "14px",
               backgroundColor: palette.bg.secondary,
               color: palette.text.primary,
+              width: "100%",
             }}
           />
           <input
@@ -190,6 +195,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
               fontSize: "14px",
               backgroundColor: palette.bg.secondary,
               color: palette.text.primary,
+              width: "100%",
             }}
           />
           <input
@@ -204,9 +210,10 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
               fontSize: "14px",
               backgroundColor: palette.bg.secondary,
               color: palette.text.primary,
+              width: "100%",
             }}
           />
-          <div style={{ display: "flex", gap: "10px", gridColumn: "1 / -1" }}>
+          <div style={{ display: "flex", gap: "10px", gridColumn: "1 / -1", justifyContent: "center" }}>
             <button
               type="submit"
               style={{
@@ -220,6 +227,8 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                 fontWeight: "600",
                 cursor: "pointer",
                 transition: "background-color 0.2s",
+                width: "100%",
+                maxWidth: "200px",
               }}
               onMouseOver={(e) => (e.currentTarget.style.opacity = "0.9")}
               onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
@@ -240,6 +249,8 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                 fontWeight: "600",
                 cursor: "pointer",
                 transition: "background-color 0.2s",
+                width: "100%",
+                maxWidth: "200px",
               }}
               onMouseOver={(e) => (e.currentTarget.style.opacity = "0.9")}
               onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
@@ -251,7 +262,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
       )}
 
       {/* Products List */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
         {data.products.length === 0 ? (
           <div
             style={{
@@ -275,10 +286,11 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                 borderRadius: "12px",
                 padding: "20px",
                 display: "flex",
-                justifyContent: "space-between",
+                flexDirection: "column",
                 alignItems: "flex-start",
                 boxShadow: palette.shadow,
                 transition: "box-shadow 0.2s",
+                width: "100%",
               }}
               onMouseOver={(e) => (e.currentTarget.style.boxShadow = palette.shadowMd)}
               onMouseOut={(e) => (e.currentTarget.style.boxShadow = palette.shadow)}
@@ -292,6 +304,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                     display: "grid",
                     gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
                     gap: "16px",
+                    width: "100%",
                   }}
                 >
                   <div>
@@ -327,7 +340,7 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                   </div>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: "8px", marginLeft: "16px" }}>
+              <div style={{ display: "flex", gap: "8px", marginTop: "16px", width: "100%", justifyContent: "center" }}>
                 <button
                   onClick={() => handleEditProduct(product)}
                   style={{
@@ -340,6 +353,8 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                     fontWeight: "500",
                     cursor: "pointer",
                     transition: "all 0.2s",
+                    width: "100%",
+                    maxWidth: "150px",
                   }}
                   onMouseOver={(e) => {
                     e.currentTarget.style.backgroundColor = palette.border
@@ -362,6 +377,8 @@ export function InventoryModule({ isDark }: InventoryModuleProps) {
                     fontWeight: "500",
                     cursor: "pointer",
                     transition: "all 0.2s",
+                    width: "100%",
+                    maxWidth: "150px",
                   }}
                   onMouseOver={(e) => {
                     e.currentTarget.style.opacity = "0.8"
